@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DREAMY CALMING BEAUTY SHAPE Appointments</title>
+    <style>
+        body {
+            font-family: serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(90deg, #efc7d6, #e9b7e6);
+            color: blue;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        header img {
+            max-width: 250px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+            margin-top: 0cm;
+            margin-bottom: 0cm;
+            transform: scale(1.2);
+        }
+        header h1 {
+            font-family: "Playfair Display", serif;
+            font-weight: bold;
+        }
+        nav {
+            background-color: #aa144b;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #da1884;
+        }
+        section {
+            padding: 20px;
+            animation: slideIn 1.5s ease;
+        }
+        .about, .services, .contact, .booking {
+            background-color: white;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #b33664;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        form button:hover {
+            background-color: #ef4f69;
+        }
+        footer {
+            background-color: #b33664;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.svg" alt="DREAMY CALMING BEAUTY SHAPE Logo">
+    </header>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#booking">Book Appointment</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <p>DREAMY CALMING BEAUTY SHAPE brings premium beauty and wellness treatments right to your doorstep. Our home service ensures you experience ultimate relaxation and professional care in the comfort of your own space.</p>
+    </section>
+
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <ul>
+            <li>Swedish Massage</li>
+            <li>Relaxation Massage</li>
+            <li>Hot Stone Massage</li>
+            <li>Deep Tissue Massage</li>
+            <li>Hot Oil Massage</li>
+            <li>Reflexology</li>
+            <li>Sport Massage</li>
+            <li>Couple Massage</li>
+            <li>Thai Massage</li>
+            <li>Madero Therapy</li>
+            <li>Lymphatic Drainage</li>
+            <li>Prenatal Massage</li>
+            <li>Lymphatic Massage</li>
+            <li>Slimming Massage</li>
+        </ul>
+    </section>
+
+    <section id="booking" class="booking">
+        <h2>Book an Appointment</h2>
+        <p>Please fill out the form below to schedule your appointment. Ensure all details are accurate for a smooth booking process.</p>
+        <form onsubmit="submitBooking(event)">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+            <input type="datetime-local" id="datetime" required>
+            <textarea id="details" placeholder="Service Details" required></textarea>
+            <button type="submit">Book Now</button>
+        </form>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>Phone: +971569880996, +971545390834</p>
+        <p>Email: sherylinocentes161@gmail.com</p>
+        <p>Locations: Abu Dhabi, Dubai, Al Ain, Khalifa City</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 DREAMY CALMING BEAUTY SHAPE. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function submitBooking(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const datetime = document.getElementById('datetime').value;
+            const details = document.getElementById('details').value;
+
+            alert(`Thank you, ${name}! Your appointment on ${datetime} has been booked. We will contact you at ${phone} or ${email} shortly.`);
+        }
+    </script>
+</body>
+</html>
