@@ -165,7 +165,15 @@
             const datetime = document.getElementById('datetime').value;
             const details = document.getElementById('details').value;
 
-            alert(`Thank you, ${name}! Your appointment on ${datetime} has been booked. We will contact you at ${phone} or ${email} shortly.`);
+            const availableSlots = ["10:00 AM", "12:00 PM", "3:00 PM", "5:00 PM"];
+            const selectedTime = new Date(datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            if (!availableSlots.includes(selectedTime)) {
+                alert(`Sorry, the selected time ${selectedTime} is not available. Please choose another time.`);
+                return;
+            }
+
+            alert(`Thank you, ${name}! Your appointment on ${datetime} has been booked. A confirmation has been sent to ${email}.`);
         }
     </script>
 </body>
