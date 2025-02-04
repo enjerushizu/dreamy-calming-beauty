@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DREAMY CALMING BEAUTY SHAPE Appointments</title>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script>
         (function(){
             emailjs.init("bLyOjA1mPSlocrbyC"); // Replace with your EmailJS Public Key
@@ -22,22 +24,24 @@
             background: linear-gradient(90deg, #efc7d6, #e9b7e6);
             color: blue;
             text-align: center;
-            padding: 20px 0;
+            padding: 40px 0;
             margin-top: 20px;
             animation: fadeIn 2s ease-in-out;
+            position: relative;
+        }
+        header .logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease;
+        }
+        header .logo-container:hover {
+            transform: scale(1.1);
         }
         header img {
-            max-width: 250px;
+            max-width: 200px;
             height: auto;
             display: block;
-            margin: 0 auto 10px;
-            margin-top: 0cm;
-            margin-bottom: 0cm;
-            transform: scale(1.2);
-        }
-        header h1 {
-            font-family: "Playfair Display", serif;
-            font-weight: bold;
         }
         nav {
             background-color: #aa144b;
@@ -82,6 +86,12 @@
         form button:hover {
             background-color: #fc6c85;
         }
+        .loading {
+            display: none;
+            text-align: center;
+            color: #aa144b;
+            font-weight: bold;
+        }
         footer {
             background-color: #aa144b;
             color: white;
@@ -89,12 +99,10 @@
             padding: 10px 0;
             margin-top: 20px;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
         @keyframes slideIn {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -103,7 +111,9 @@
 </head>
 <body>
     <header>
-        <img src="logo.svg" alt="DREAMY CALMING BEAUTY SHAPE Logo">
+        <div class="logo-container">
+            <img src="logo.svg" alt="DREAMY CALMING BEAUTY SHAPE Logo">
+        </div>
     </header>
 
     <nav>
@@ -141,11 +151,12 @@
     <section id="booking" class="booking">
         <h2>Book an Appointment</h2>
         <p>Please fill out the form below to schedule your appointment. Ensure all details are accurate for a smooth booking process.</p>
-        <form onsubmit="submitBooking(event)">
+        <div class="loading" id="loading">Processing your booking...</div>
+        <form id="bookingForm">
             <input type="text" id="name" placeholder="Your Name" required>
             <input type="email" id="email" placeholder="Your Email" required>
-            <input type="tel" id="phone" placeholder="Phone Number" required>
-            <input type="datetime-local" id="datetime" required>
+            <input type="tel" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+            <input type="text" id="datetime" placeholder="Select Date & Time" required>
             <textarea id="details" placeholder="Service Details" required></textarea>
             <select id="location" required>
                 <option value="" disabled selected>Select Location</option>
@@ -170,33 +181,45 @@
     </footer>
 
     <script>
-        function submitBooking(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const datetime = document.getElementById('datetime').value;
-            const details = document.getElementById('details').value;
-            const location = document.getElementById('location').value;
-        };
+        flatpickr("#datetime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today"
+        });
 
-            if (!bookingDetails.name || !bookingDetails.email || !bookingDetails.phone || !bookingDetails.datetime || !bookingDetails.details || !bookingDetails.location) {
-                alert('Please fill out all fields.');
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const loadingIndicator = document.getElementById('loading');
+            loadingIndicator.style.display = 'block';
+
+            const bookingDetails = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                datetime: document.getElementById('datetime').value,
+                details: document.getElementById('details').value,
+                location: document.getElementById('location').value
+            };
+
+            if (Object.values(bookingDetails).some(field => !field)) {
+                alert('All fields are required. Please complete the form.');
+                loadingIndicator.style.display = 'none';
                 return;
             }
 
-            emailjs.send("service_xnbkm8o", "template_mrfmqr7", bookingDetails)
-                .then(function(response) {
-                    alert(`Thank you, ${bookingDetails.name}! Your appointment has been booked in ${bookingDetails.location}. A confirmation has been sent to ${bookingDetails.email}.`);
+            emailjs.send("service_cjpi9xo", "template_mrfmqr7", bookingDetails)
+                .then(response => {
+                    alert(`Thank you, ${bookingDetails.name}! Your appointment in ${bookingDetails.location} has been booked. Confirmation sent to ${bookingDetails.email}.`);
                     document.getElementById('bookingForm').reset();
                 })
-                .catch(function(error) {
-                    console.error('Booking failed:', error);
-                    alert('An error occurred while booking your appointment. Please try again later.');
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(`There was an issue booking your appointment. Error: ${error.text || error}`);
+                })
+                .finally(() => {
+                    loadingIndicator.style.display = 'none';
                 });
         });
     </script>
 </body>
 </html>
-
-  
