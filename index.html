@@ -178,25 +178,25 @@
             const datetime = document.getElementById('datetime').value;
             const details = document.getElementById('details').value;
             const location = document.getElementById('location').value;
+        };
 
-            const bookingDetails = {
-                name: name,
-                email: email,
-                phone: phone,
-                datetime: datetime,
-                details: details,
-                location: location
-            };
+            if (!bookingDetails.name || !bookingDetails.email || !bookingDetails.phone || !bookingDetails.datetime || !bookingDetails.details || !bookingDetails.location) {
+                alert('Please fill out all fields.');
+                return;
+            }
 
             emailjs.send("service_xnbkm8o", "template_mrfmqr7", bookingDetails)
                 .then(function(response) {
-                    alert(`Thank you, ${name}! Your appointment has been booked in ${location}. A confirmation has been sent to ${email}.`);
+                    alert(`Thank you, ${bookingDetails.name}! Your appointment has been booked in ${bookingDetails.location}. A confirmation has been sent to ${bookingDetails.email}.`);
+                    document.getElementById('bookingForm').reset();
                 })
                 .catch(function(error) {
-                    console.error('Email sending failed:', error);
-                    alert('Sorry, there was an issue sending the confirmation email. Please try again later.');
+                    console.error('Booking failed:', error);
+                    alert('An error occurred while booking your appointment. Please try again later.');
                 });
-        }
+        });
     </script>
 </body>
 </html>
+
+  
