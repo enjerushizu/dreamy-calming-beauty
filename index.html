@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DREAMY CALMING BEAUTY SHAPE Appointments</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("OcNwrM35RSPgHfotc"); // Replace with your EmailJS Public Key
+        })();
+    </script>
     <style>
         body {
             font-family: serif;
@@ -45,7 +51,7 @@
             transition: color 0.3s;
         }
         nav a:hover {
-            color: #da1884;
+            color: #b33664;
         }
         section {
             padding: 20px;
@@ -59,7 +65,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
         }
-        form input, form textarea, form button {
+        form input, form textarea, form button, form select {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -67,17 +73,17 @@
             border-radius: 5px;
         }
         form button {
-            background-color: #b33664;
+            background-color: #da1884;
             color: white;
             border: none;
             cursor: pointer;
             transition: background 0.3s;
         }
         form button:hover {
-            background-color: #ef4f69;
+            background-color: #fc6c85;
         }
         footer {
-            background-color: #b33664;
+            background-color: #aa144b;
             color: white;
             text-align: center;
             padding: 10px 0;
@@ -141,6 +147,13 @@
             <input type="tel" id="phone" placeholder="Phone Number" required>
             <input type="datetime-local" id="datetime" required>
             <textarea id="details" placeholder="Service Details" required></textarea>
+            <select id="location" required>
+                <option value="" disabled selected>Select Location</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Khalifa City">Khalifa City</option>
+                <option value="Al Ain">Al Ain</option>
+            </select>
             <button type="submit">Book Now</button>
         </form>
     </section>
@@ -164,16 +177,23 @@
             const phone = document.getElementById('phone').value;
             const datetime = document.getElementById('datetime').value;
             const details = document.getElementById('details').value;
+            const location = document.getElementById('location').value;
 
-            const availableSlots = ["10:00 AM", "12:00 PM", "3:00 PM", "5:00 PM"];
-            const selectedTime = new Date(datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const bookingDetails = {
+                name: name,
+                email: email,
+                phone: phone,
+                datetime: datetime,
+                details: details,
+                location: location
+            };
 
-            if (!availableSlots.includes(selectedTime)) {
-                alert(`Sorry, the selected time ${selectedTime} is not available. Please choose another time.`);
-                return;
-            }
-
-            alert(`Thank you, ${name}! Your appointment on ${datetime} has been booked. A confirmation has been sent to ${email}.`);
+            emailjs.send("service_xnbkm8o", "template_mrfmqr7", bookingDetails)
+                .then(function(response) {
+                    alert(`Thank you, ${name}! Your appointment has been booked in ${location}. A confirmation has been sent to ${email}.`);
+                }, function(error) {
+                    alert('Oops! Something went wrong. Please try again.');
+                });
         }
     </script>
 </body>
