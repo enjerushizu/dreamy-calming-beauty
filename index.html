@@ -191,8 +191,6 @@
             emailjs.send("service_xnbkm8o", "template_99ckg45", bookingDetails)
                 .then(function(response) {
                     alert(`Thank you, ${name}! Your appointment has been booked in ${location}. A confirmation has been sent to ${email}.`);
-                }, function(error) {
-                    alert('Oops! Something went wrong. Please try again.');
                 });
         }
     </script>
