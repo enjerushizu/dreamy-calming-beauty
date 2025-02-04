@@ -191,6 +191,10 @@
             emailjs.send("service_xnbkm8o", "template_mrfmqr7", bookingDetails)
                 .then(function(response) {
                     alert(`Thank you, ${name}! Your appointment has been booked in ${location}. A confirmation has been sent to ${email}.`);
+                })
+                .catch(function(error) {
+                    console.error('Email sending failed:', error);
+                    alert('Sorry, there was an issue sending the confirmation email. Please try again later.');
                 });
         }
     </script>
